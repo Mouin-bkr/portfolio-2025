@@ -1,12 +1,14 @@
 "use client"
 
 import Link from "next/link"
+// no avatar or photo by request
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { ArrowRight, Code2, Palette, Rocket } from "lucide-react"
 import { motion } from "framer-motion"
 import { projects } from "@/lib/data/projects"
 import { ProjectCard } from "@/components/project-card"
+import { Badge } from "@/components/ui/badge"
 
 const features = [
   {
@@ -29,10 +31,15 @@ const features = [
 export default function Home() {
   const featuredProjects = projects.filter(p => p.featured).slice(0, 3)
 
+  const gridVariants = {
+    hidden: { opacity: 0, y: 8 },
+    visible: { opacity: 1, y: 0, transition: { staggerChildren: 0.12 } },
+  }
+
   return (
     <div className="relative">
-      <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/5" />
+      <section className="hero-background relative min-h-[90vh] flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-primary/10 z-10" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10">
           <div className="text-center space-y-8">
@@ -41,18 +48,19 @@ export default function Home() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
             >
-              <h1 className="text-5xl md:text-7xl font-bold mb-4 text-balance">
-                Hi, I'm{" "}
-                <span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
-                  Your Name
-                </span>
+              <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold mb-4 leading-tight text-balance relative z-20">
+                Mouin Bkr — Full‑Stack Developer
               </h1>
-              <p className="text-xl md:text-2xl text-muted-foreground mb-2">
-                Full-Stack Developer & UI/UX Enthusiast
+              <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto text-center">
+                I combine clean UI, robust backend systems, and pragmatic DevOps to deliver products that scale.
               </p>
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-balance">
-                I build exceptional digital experiences that combine beautiful design with powerful functionality.
-              </p>
+              <div className="mt-6 flex flex-wrap justify-center gap-2">
+                {["Next.js","TypeScript","Node.js","Docker","Hadoop"].map(tag => (
+                  <Badge key={tag} variant="outline" className="bg-background/70 backdrop-blur-sm">
+                    {tag}
+                  </Badge>
+                ))}
+              </div>
             </motion.div>
 
             <motion.div
@@ -73,6 +81,8 @@ export default function Home() {
                 </Button>
               </Link>
             </motion.div>
+
+            <div className="mt-2 text-center text-sm text-muted-foreground">Available for internships & freelance — open to DevOps, Data, and Full-Stack roles.</div>
 
             <motion.div
               initial={{ opacity: 0 }}
@@ -147,11 +157,19 @@ export default function Home() {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.15 }}
+            variants={gridVariants}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12"
+          >
             {featuredProjects.map((project, index) => (
-              <ProjectCard key={project.id} project={project} index={index} />
+              <motion.div key={project.id} className="project-card-motion" variants={{ hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0, transition: { duration: 0.45 } } }}>
+                <ProjectCard project={project} index={index} />
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}

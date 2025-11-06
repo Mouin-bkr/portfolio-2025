@@ -11,6 +11,7 @@ export interface Project {
   takeaways: string;
   liveUrl?: string;
   githubUrl?: string;
+  keywords?: string[];
   featured: boolean;
 }
 
@@ -29,4 +30,17 @@ export interface Social {
   name: string;
   url: string;
   icon: string;
+}
+
+export interface Profile {
+  id: string;
+  name: string;
+  title: string;
+  bio: string;
+  email: string;
+  phone: string;
+  location: string;
+  resumeUrl?: string;
+  githubUrl?: string;
+  linkedinUrl?: string;
 }

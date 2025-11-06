@@ -4,7 +4,8 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { SectionTitle } from "@/components/section-title"
 import { experiences } from "@/lib/data/experience"
-import { Download, Briefcase, GraduationCap } from "lucide-react"
+import { profile } from "@/lib/data/profile"
+import { Download, Briefcase, GraduationCap, Mail, Phone, MapPin, Github, Linkedin } from "lucide-react"
 import { motion } from "framer-motion"
 
 export default function Resume() {
@@ -29,13 +30,33 @@ export default function Resume() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="mt-8 flex justify-center"
+          transition={{ duration: 0.5, delay: 0.1 }}
+          className="mt-6 grid gap-4 justify-items-center"
         >
-          <Button size="lg">
-            <Download className="mr-2 h-4 w-4" />
-            Download Full CV
-          </Button>
+          <div className="text-center max-w-3xl">
+            <h1 className="text-3xl md:text-4xl font-extrabold">{profile.name}</h1>
+            <p className="text-lg text-muted-foreground mt-1">{profile.title}</p>
+            <div className="mt-3 flex flex-wrap gap-3 items-center justify-center text-sm text-muted-foreground">
+              <span className="inline-flex items-center gap-1"><MapPin className="h-4 w-4" /> {profile.location}</span>
+              <a href={`mailto:${profile.email}`} className="inline-flex items-center gap-1 hover:underline"><Mail className="h-4 w-4" /> {profile.email}</a>
+              <a href={`tel:${profile.phone.replace(/\s/g,'')}`} className="inline-flex items-center gap-1 hover:underline"><Phone className="h-4 w-4" /> {profile.phone}</a>
+              {profile.githubUrl && (
+                <a href={profile.githubUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 hover:underline"><Github className="h-4 w-4" /> GitHub</a>
+              )}
+              {profile.linkedinUrl && (
+                <a href={profile.linkedinUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 hover:underline"><Linkedin className="h-4 w-4" /> LinkedIn</a>
+              )}
+            </div>
+            <p className="mt-5 text-muted-foreground leading-relaxed whitespace-pre-line">{profile.bio}</p>
+          </div>
+          {profile.resumeUrl && (
+            <a href={profile.resumeUrl} target="_blank" rel="noopener noreferrer">
+              <Button size="lg">
+                <Download className="mr-2 h-4 w-4" />
+                Download Full CV
+              </Button>
+            </a>
+          )}
         </motion.div>
 
         <div className="mt-16 space-y-16">

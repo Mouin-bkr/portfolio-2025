@@ -22,7 +22,7 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
     >
-      <Card className="overflow-hidden h-full flex flex-col group hover:shadow-lg transition-shadow duration-300">
+      <Card aria-label={project.title} className="overflow-hidden h-full flex flex-col group hover:shadow-lg transition-shadow duration-300 relative">
         <div className="relative h-48 overflow-hidden">
           <Image
             src={project.image}
@@ -30,6 +30,16 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
             fill
             className="object-cover group-hover:scale-105 transition-transform duration-300"
           />
+          {/* Hover overlay */}
+          <div className="card-hover-overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+            <div className="absolute left-4 bottom-4 right-4 flex items-end justify-between">
+              <div className="flex flex-wrap gap-2">
+                {(project.keywords || []).slice(0, 5).map((k: string) => (
+                  <Badge key={k} variant="outline" className="text-xs bg-white/5 border-white/6 text-white/95">{k}</Badge>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
         <CardHeader>
           <CardTitle className="flex items-center justify-between">
